@@ -6,12 +6,18 @@
 package com.mycompany.hinnoitteluohjelmisto;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author 20128509
  */
 public class Hinnoitteluohjelmisto extends javax.swing.JFrame {
+
+    int henkilo;
+    int yhteensa;
+    double alennus;
+    double yhteenveto;
 
     /**
      * Creates new form Hinnoitteluohjelmisto
@@ -33,8 +39,6 @@ public class Hinnoitteluohjelmisto extends javax.swing.JFrame {
         buttonGroup2 = new javax.swing.ButtonGroup();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList<>();
         jradioAikuiset = new javax.swing.JRadioButton();
@@ -53,15 +57,16 @@ public class Hinnoitteluohjelmisto extends javax.swing.JFrame {
         jchkKiharrus = new javax.swing.JCheckBox();
         jchkPermanentti = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jListTilaus = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jtxtHenkilömäärä = new javax.swing.JTextField();
-        jtxtHinta = new javax.swing.JTextField();
-        jtxtHintaYhteensä = new javax.swing.JTextField();
-        jbtnPoista = new javax.swing.JButton();
+        jtxtYhteensä = new javax.swing.JTextField();
+        jtxtYhteenveto = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,14 +84,6 @@ public class Hinnoitteluohjelmisto extends javax.swing.JFrame {
             }
         });
 
-        jList1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "aikuiset 25 eur", "lapset 15 eur", "lyhyet 0 eur ", "keskipitkät 5 eur", "pitkät 10 eur", "raidat 30 eur", "tyviväri 30 eur", "hiusten värjäys 80 eur", "juhlakampaus 50 eur", "koekampaus 20 eur", "pesu 10 eur", "kiharrus 15 eur", "permanentti 50 eur", " " };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
-
         jList2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jScrollPane2.setViewportView(jList2);
 
@@ -102,6 +99,8 @@ public class Hinnoitteluohjelmisto extends javax.swing.JFrame {
                 jbtnTilaaActionPerformed(evt);
             }
         });
+
+        jtxtAlennus.setEditable(false);
 
         buttonGroup1.add(jradioLapset);
         jradioLapset.setText("lapset 15€");
@@ -129,135 +128,171 @@ public class Hinnoitteluohjelmisto extends javax.swing.JFrame {
 
         jchkPermanentti.setText("permanentti 50€");
 
-        jLabel1.setText("Alennus");
+        jLabel1.setText("Alennus (5 €):");
 
-        jScrollPane3.setViewportView(jListTilaus);
+        jLabel2.setText("Henkilömäärä* :");
 
-        jLabel2.setText("Henkilömäärä");
+        jLabel4.setText("Hinta");
 
-        jLabel3.setText("Hinta");
+        jtxtYhteensä.setEditable(false);
 
-        jLabel4.setText("Hinta yhteensä");
+        jtxtYhteenveto.setEditable(false);
 
-        jbtnPoista.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        jbtnPoista.setText("Poista");
+        jLabel5.setText("Yhteenveto: ");
+
+        jButton3.setText("Add");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jList1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "aikuiset 25 eur", "lapset 15 eur", "lyhyet 0 eur ", "keskipitkät 5 eur", "pitkät 10 eur", "raidat 30 eur", "tyviväri 30 eur", "hiusten värjäys 80 eur", "juhlakampaus 50 eur", "koekampaus 20 eur", "pesu 10 eur", "kiharrus 15 eur", "permanentti 50 eur" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList1);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 20, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(73, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jradioLyhyet, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jchkKoekampaus, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jchkPermanentti, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jchkKiharrus, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jchkPesu, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jradioAikuiset, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jradioLapset, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jradioKeskipitkät, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jchkTyviväri, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jchkJuhlakampaus, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jradioPitkät, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jchkRaidat, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jchkVärjäys, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addContainerGap(53, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jchkKoekampaus)
+                            .addComponent(jchkPermanentti)
+                            .addComponent(jchkKiharrus)
+                            .addComponent(jchkPesu)
+                            .addComponent(jradioAikuiset)
+                            .addComponent(jchkTyviväri)
+                            .addComponent(jchkJuhlakampaus)
+                            .addComponent(jradioPitkät)
+                            .addComponent(jchkRaidat)
+                            .addComponent(jchkVärjäys)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jradioKeskipitkät)
+                                    .addComponent(jradioLyhyet)
+                                    .addComponent(jradioLapset))
+                                .addGap(28, 28, 28)))
+                        .addGap(49, 49, 49)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jtxtHenkilömäärä, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2))
+                        .addGap(195, 195, 195))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(23, 23, 23)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel1)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel4)))
-                                    .addComponent(jbtnTilaa, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(52, 52, 52)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jtxtAlennus, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jtxtHintaYhteensä, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jtxtHinta, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jtxtHenkilömäärä, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtnPoista, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(46, 46, 46)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jtxtYhteenveto, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtxtYhteensä, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtxtAlennus, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jbtnTilaa, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jradioAikuiset)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jradioLapset)
-                .addGap(18, 18, 18)
-                .addComponent(jradioLyhyet)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jradioKeskipitkät)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jradioPitkät)
-                .addGap(18, 18, 18)
-                .addComponent(jchkRaidat)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jchkTyviväri)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jchkVärjäys)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jchkJuhlakampaus)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jchkKoekampaus)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jchkPesu)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jchkKiharrus)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jchkPermanentti)
-                .addGap(18, 18, 18)
+                        .addComponent(jButton2)))
+                .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtxtAlennus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4)
-                        .addGap(3, 3, 3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jtxtHenkilömäärä, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jtxtHenkilömäärä, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jradioAikuiset)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jtxtHinta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(25, 25, 25))
-                            .addComponent(jtxtHintaYhteensä, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addComponent(jbtnTilaa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtnPoista))
+                                .addComponent(jradioLapset)
+                                .addGap(20, 20, 20)
+                                .addComponent(jradioLyhyet)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jradioKeskipitkät)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jradioPitkät)
+                                .addGap(28, 28, 28)
+                                .addComponent(jchkRaidat)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jchkTyviväri)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jchkVärjäys)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jchkJuhlakampaus)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jchkKoekampaus)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jchkPesu)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jchkKiharrus)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jchkPermanentti))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addComponent(jLabel4))
+                                    .addComponent(jtxtYhteensä, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(25, 25, 25)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jtxtAlennus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(15, 15, 15)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jtxtYhteenveto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbtnTilaa)
+                                .addGap(80, 80, 80)))))
                 .addContainerGap())
         );
 
@@ -271,95 +306,154 @@ public class Hinnoitteluohjelmisto extends javax.swing.JFrame {
         }
         jList1.setModel(dlm);
          */
+        dlm2.removeElement(jList2.getSelectedValue());
+        jList2.setModel(dlm2);
+
     }//GEN-LAST:event_jButton1ActionPerformed
-    DefaultListModel dlm = new DefaultListModel();
+    DefaultListModel dlm2 = new DefaultListModel();
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        /*  dlm2.addElement(jList1.getSelectedValue());
-        jList2.setModel(dlm2);*/
+        dlm2.addElement(jList1.getSelectedValue());
+        jList2.setModel(dlm2);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jbtnTilaaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnTilaaActionPerformed
-        jradioAikuiset.setActionCommand("Aikuiset");
-        jradioLapset.setActionCommand("Lapset");
-        jradioLyhyet.setActionCommand("Lyhyet");
-        jradioKeskipitkät.setActionCommand("Keskipitkät");
-        jradioPitkät.setActionCommand("Pitkät");
 
-        double hinta = 0;
-
-        if (buttonGroup1.getSelection().getActionCommand() == "Aikuiset") {
-            hinta = 25;
-        } else if (buttonGroup1.getSelection().getActionCommand() == "Lapset") {
-            hinta = 15;
-        }
-
-        if (buttonGroup2.getSelection().getActionCommand() == "Lyhyet") {
-            hinta = hinta + 0;
-        } else if (buttonGroup2.getSelection().getActionCommand() == "Keskipitkät") {
-            hinta = hinta + 5;
-        } else if (buttonGroup2.getSelection().getActionCommand() == "Pitkät") {
-            hinta = hinta + 10;
-        }
-
-        if (jchkRaidat.isSelected()) {
-            hinta = hinta + 30;
-        }
-        if (jchkTyviväri.isSelected()) {
-            hinta = hinta + 30;
-        }
-        if (jchkVärjäys.isSelected()) {
-            hinta = hinta + 80;
-        }
-        if (jchkJuhlakampaus.isSelected()) {
-            hinta = hinta + 50;
-        }
-        if (jchkKoekampaus.isSelected()) {
-            hinta = hinta + 20;
-        }
-        if (jchkPesu.isSelected()) {
-            hinta = hinta + 10;
-        }
-        if (jchkKiharrus.isSelected()) {
-            hinta = hinta + 15;
-        }
-        if (jchkPermanentti.isSelected()) {
-            hinta = hinta + 50;
-        }
-
-        jtxtHinta.setText(String.valueOf(hinta));
-
-        //Internet-varauksella saa - 5 eur alennuksen, jos kokonaissumma on 25 eur tai enemmän.
-        int maara = Integer.parseInt(jtxtHenkilömäärä.getText());
-        double yhteensa, alennus;
-        yhteensa = maara * hinta;
-
-        //jos se on toinen vaihtoehto , ei lasketa 5% MIKSI?
-        if (yhteensa < 25) {
-            alennus = 0;
-            jtxtAlennus.setText("0");
-        } else {
-            try {
-                alennus = Double.parseDouble(jtxtAlennus.getText());
-
-            } catch (Exception e) {
-                alennus = 5;
-                jtxtAlennus.setText("5");
-                yhteensa = hinta - hinta * 5.0 / 100;
-            }
-        }
-
-        jtxtHintaYhteensä.setText(String.valueOf(yhteensa));
-
-        // lisää List-objektiin yhteissumman (henkilömäärä, hinta sekä henkilömäärä x hinta)
-        
-
-        dlm.addElement("henkilömäärä: " + maara + " kpl    " + "hinta: " + hinta + " €    " + "yhteensä: " + yhteensa + " €    " );
-
-        jListTilaus.setModel(dlm);
-
+        dlm2.addElement("-----------------------------");
+        dlm2.addElement("Henkilomäärä: " + henkilo);
+        dlm2.addElement("Yhteensa: " + yhteensa + " €");
+        dlm2.addElement("Alennus: " + alennus + " €");
+        dlm2.addElement("Laskun summa: " + yhteenveto + " €");
+        dlm2.addElement("-----------------------------");
+        dlm2.addElement("KIITOS KÄYNNISTÄ!");
+        jList2.setModel(dlm2);
 
     }//GEN-LAST:event_jbtnTilaaActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        //henkilomaara
+        try {
+            if (jtxtHenkilömäärä.getText().isBlank()) {
+                JOptionPane.showMessageDialog(null, "Kirjoita henkilomäärä ", "VIRHE", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            Integer.valueOf(jtxtHenkilömäärä.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Vain lukuja, kiitos. Virhe: " + e.getMessage(), "VIRHE", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        //add 
+        if (jradioAikuiset.isSelected()) {
+            jList1.getSelectedValue();
+            dlm2.addElement(jList1.getModel().getElementAt(0));
+            jList2.setModel(dlm2);
+        } else if (jradioLapset.isSelected()) {
+            jList1.getSelectedValue();
+            dlm2.addElement(jList1.getModel().getElementAt(1));
+            jList2.setModel(dlm2);
+        }
+        buttonGroup1.clearSelection();
+
+        if (jradioLyhyet.isSelected()) {
+            jList1.getSelectedValue();
+            dlm2.addElement(jList1.getModel().getElementAt(2));
+            jList2.setModel(dlm2);
+        } else if (jradioKeskipitkät.isSelected()) {
+            jList1.getSelectedValue();
+            dlm2.addElement(jList1.getModel().getElementAt(3));
+            jList2.setModel(dlm2);
+        } else if (jradioPitkät.isSelected()) {
+            jList1.getSelectedValue();
+            dlm2.addElement(jList1.getModel().getElementAt(4));
+            jList2.setModel(dlm2);
+        }
+        buttonGroup2.clearSelection();
+
+        if (jchkRaidat.isSelected()) {
+            jList1.getSelectedValue();
+            dlm2.addElement(jList1.getModel().getElementAt(5));
+            jList2.setModel(dlm2);
+        }
+        jchkRaidat.setSelected(false);
+
+        if (jchkTyviväri.isSelected()) {
+            jList1.getSelectedValue();
+            dlm2.addElement(jList1.getModel().getElementAt(6));
+            jList2.setModel(dlm2);
+        }
+        jchkTyviväri.setSelected(false);
+
+        if (jchkVärjäys.isSelected()) {
+            jList1.getSelectedValue();
+            dlm2.addElement(jList1.getModel().getElementAt(7));
+            jList2.setModel(dlm2);
+        }
+        jchkVärjäys.setSelected(false);
+
+        if (jchkJuhlakampaus.isSelected()) {
+            jList1.getSelectedValue();
+            dlm2.addElement(jList1.getModel().getElementAt(8));
+            jList2.setModel(dlm2);
+        }
+        jchkJuhlakampaus.setSelected(false);
+
+        if (jchkKoekampaus.isSelected()) {
+            jList1.getSelectedValue();
+            dlm2.addElement(jList1.getModel().getElementAt(9));
+            jList2.setModel(dlm2);
+        }
+        jchkKoekampaus.setSelected(false);
+
+        if (jchkPesu.isSelected()) {
+            jList1.getSelectedValue();
+            dlm2.addElement(jList1.getModel().getElementAt(10));
+            jList2.setModel(dlm2);
+        }
+        jchkPesu.setSelected(false);
+
+        if (jchkKiharrus.isSelected()) {
+            jList1.getSelectedValue();
+            dlm2.addElement(jList1.getModel().getElementAt(11));
+            jList2.setModel(dlm2);
+        }
+        jchkKiharrus.setSelected(false);
+
+        if (jchkPermanentti.isSelected()) {
+            jList1.getSelectedValue();
+            dlm2.addElement(jList1.getModel().getElementAt(12));
+            jList2.setModel(dlm2);
+        }
+        jchkPermanentti.setSelected(false);
+
+        //summan laskeminen
+        int summa = 0;
+        yhteensa = 0;
+
+        String a = dlm2.toString();
+        System.out.println(a);
+        String[] palat = a.split(", ");
+        for (String rivi : palat) {
+            String[] osaRivista = rivi.split(" ");
+            summa += Integer.valueOf(osaRivista[1]);
+        }
+
+        henkilo = Integer.valueOf(jtxtHenkilömäärä.getText());
+
+        yhteensa = summa * henkilo;
+
+        jtxtYhteensä.setText(String.valueOf(yhteensa));
+
+        alennus = 0;
+        if (yhteensa >= 25) {
+            alennus = 5;
+            jtxtAlennus.setText(String.valueOf(alennus));
+        }
+
+        yhteenveto = yhteensa - alennus;
+        jtxtYhteenveto.setText(String.valueOf(yhteenveto));
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -406,17 +500,16 @@ public class Hinnoitteluohjelmisto extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
-    private javax.swing.JList<String> jListTilaus;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JButton jbtnPoista;
     private javax.swing.JButton jbtnTilaa;
     private javax.swing.JCheckBox jchkJuhlakampaus;
     private javax.swing.JCheckBox jchkKiharrus;
@@ -433,7 +526,7 @@ public class Hinnoitteluohjelmisto extends javax.swing.JFrame {
     private javax.swing.JRadioButton jradioPitkät;
     private javax.swing.JTextField jtxtAlennus;
     private javax.swing.JTextField jtxtHenkilömäärä;
-    private javax.swing.JTextField jtxtHinta;
-    private javax.swing.JTextField jtxtHintaYhteensä;
+    private javax.swing.JTextField jtxtYhteensä;
+    private javax.swing.JTextField jtxtYhteenveto;
     // End of variables declaration//GEN-END:variables
 }
